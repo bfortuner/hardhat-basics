@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# NOTE: This should not be deploy except for production
+# TODO(bfortuner): Uncomment after demo
 # src/contracts
 
 # dependencies

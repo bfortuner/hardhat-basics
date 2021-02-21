@@ -14,6 +14,14 @@ To run it, you just need to execute `npm start` in a terminal, and open
 To learn more about what `create-react-app` offers, you can read
 [its documentation](https://create-react-app.dev/docs/getting-started).
 
+## Deploying the Dapp
+
+# https://create-react-app.dev/docs/deployment
+* https://jamstack.org/generators/next/ (Static website)
+* https://jamstack.org/
+* https://vercel.com/
+* https://www.netlify.com/
+
 ## Architecture of the Dapp
 
 This Dapp consists of multiple React Components, which you can find in
