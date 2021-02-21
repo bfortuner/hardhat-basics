@@ -120,3 +120,10 @@ Kill server if it's stuck
 lsof -i :8545
 kill <PID>
 ```
+
+# Deployment
+
+DANGER: If you push change to `main` branch, and vercel will deploy automatically
+
+* https://vercel.com/bfortuner/hardhat-basics-v3 (web app hosting)
+* https://dashboard.alchemyapi.io/apps/1pymw9wwpxs7wdaj (ethereum node relayer)
