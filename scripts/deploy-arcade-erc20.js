@@ -22,7 +22,10 @@ async function main() {
     const ArcadeToken = await ethers.getContractFactory("ArcadeToken");
 
     // Pass in constructor arguments to deploy()
-    const totalSupply = 1000;
+    // If we want to have some decimals, say two, then we would need to modify the total supply,
+    // by adding a zero for each decimal at the end of the desired number. Meaning that if we wanted
+    // 1000 to be the total supply, we need to update our code to be 100,000 (1,000 + 00)
+    const totalSupply = ethers.BigNumber.from("1000000000000000000000");
     const token = await ArcadeToken.deploy(totalSupply);
     await token.deployed();
   

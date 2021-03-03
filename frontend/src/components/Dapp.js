@@ -92,6 +92,10 @@ export class Dapp extends React.Component {
     }
 
     // If everything is loaded, we render the application.
+    // We divide by the number of decimas
+    // TODO(bfortuner): Handle fractional amounts in the UI
+    // Ethereum doesn't have the concept of decimals, that's just for readability.
+    // If someone sends you 1ETH, they're really sending you 10**18 ETH
     return (
       <div className="container p-4">
         <div className="row">
@@ -102,7 +106,7 @@ export class Dapp extends React.Component {
             <p>
               Welcome <b>{this.state.selectedAddress}</b>, you have{" "}
               <b>
-                {this.state.balance.toString()} {this.state.tokenData.symbol}
+                {(this.state.balance / 1000000000000000000).toString()} {this.state.tokenData.symbol}
               </b>
               .
             </p>
