@@ -7,7 +7,7 @@ smart contract development.
 This project is intended to be used with the
 [Hardhat Beginners Tutorial](https://hardhat.org/tutorial), but you should be
 able to follow it by yourself by reading the README and exploring its
-`contracts`, `tests`, `scripts` and `frontend` directories.
+`contracts`, `tests`, `scripts` and `frontend` directories. Hardhat [documentation](https://hardhat.org/getting-started/).
 
 ## Quick start
 
@@ -121,9 +121,32 @@ lsof -i :8545
 kill <PID>
 ```
 
-# Deployment
+## Deployment
 
 DANGER: If you push change to `main` branch, and vercel will deploy automatically
 
 * https://vercel.com/bfortuner/hardhat-basics-v3 (web app hosting)
 * https://dashboard.alchemyapi.io/apps/1pymw9wwpxs7wdaj (ethereum node relayer)
+* https://ionicframework.com/docs/react
+* https://nextjs.org/
+* https://jamstack.org/
+* https://www.netlify.com/
+
+## Faucet
+Ropsten Faucet
+
+* https://faucet.metamask.io/
+* https://faucet.dimensions.network
+* https://docs.metamask.io/guide/ethereum-provider.html#chain-ids
+
+
+## ECR-20 Tokens
+
+* https://docs.openzeppelin.com/contracts/3.x/
+* https://betterprogramming.pub/create-and-deploy-your-own-erc-20-token-on-the-ethereum-network-87931fe4db20
+* https://github.com/ConsenSys/Tokens/blob/master/contracts/eip20/EIP20.sol
+
+## Solidity
+
+* https://docs.soliditylang.org/en/v0.8.1/solidity-by-example.html
+* https://github.com/rhlsthrm/typescript-solidity-dev-starter-kit
