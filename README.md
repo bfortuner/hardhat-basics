@@ -84,6 +84,9 @@ Your environment will have everything you need to build a Dapp powered by Hardha
 # View
 
 ```bash
+# Compile contracts
+npx hardhat compile
+
 # Default HardHat Network
 npx hardhat test
 
@@ -91,7 +94,10 @@ npx hardhat test
 npx hardhat --network ganache test
 
 # Spin up the local network
-npx hardhat node
+npx hardhat node --network localhost
+
+# Spin up the console for testing again localhost
+npx hardhat console --network localhost
 
 # Deploy the contract
 npx hardhat run scripts/deploy.js --network [ropsten|localhost]
@@ -111,7 +117,7 @@ localhost = 1337
 let token = await ethers.getContractAt("Token", contractAddress);
 await token.owner();
 // https://mikemcl.github.io/bignumber.js/
-(await token.totalSupply()).toNumber();
+(await token.totalSupply()).toNumber();  // Might overflow if converted to JS number
 (await token.balanceOf("0xe3ab88afc9e121ef423cdd8410a36aeb2e769bef")).toNumber();
 ```
 
@@ -150,3 +156,67 @@ Ropsten Faucet
 
 * https://docs.soliditylang.org/en/v0.8.1/solidity-by-example.html
 * https://github.com/rhlsthrm/typescript-solidity-dev-starter-kit
+
+## Latest Deployment
+Deploying the contracts with the account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+Account balance: 10000000000000000000000
+Token address: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+
+
+## NFT - ERC721
+
+Commands
+
+```
+# Deploy
+npx hardhat run scripts/deploy-game-item-erc721.js --network localhost
+```
+
+### Contracts
+
+* https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md
+* https://docs.openzeppelin.com/contracts/3.x/erc721
+* https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol
+* https://docs.openzeppelin.com/contracts/3.x/api/token/erc721
+
+### IPFS
+
+Using Pinata for upload
+* https://pinata.cloud/pinataupload
+* https://pinata.cloud/documentation#PinFileToIPFS
+* https://awesome.ipfs.io/
+* https://medium.com/pinata/how-to-build-erc-721-nfts-with-ipfs-e76a21d8f914
+
+Metadata
+* OpenSea compatibility: https://docs.opensea.io/docs/metadata-standards
+
+```
+{
+  "name": "Shield",
+  "description": "Protective equipment",
+  "image": "https://gateway.pinata.cloud/ipfs/QmdVoXheRz1tjTnUfxx3HBS6rzZkvQxuNfARyKgtPcWzZo/Screen%20Shot%202021-03-04%20at%202.07.15%20PM.png",
+  "attributes": [
+    {
+      "trait_type": "Base", 
+      "value": "Metal"
+    },
+    {
+      "display_type": "boost_percentage", 
+      "trait_type": "Defense Increase", 
+      "value": 10
+    }, 
+}
+```
+
+View the items
+* https://pinata.cloud/pinexplorer
+* BaseTokenURI: https://gateway.pinata.cloud/ipfs/
+
+Shield1 Metadata
+https://gateway.pinata.cloud/ipfs/QmdUEtnLR8jiqrqhAmXmBcmMWemvFTPbvv6BqRM1uJ4VNY/shield1_metadata.json
+
+### How to get the Global Token Id from the wners token map
+let userGlobalTokenId;
+let userTokenURI;
+userGlobalTokenId = await token.tokenOfOwnerByIndex(addr1.address, 0);
+userTokenURI = await token.tokenURI(userGlobalTokenId);

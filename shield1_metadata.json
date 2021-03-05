@@ -1,0 +1,16 @@
+{
+  "name": "Shield",
+  "description": "Protective equipment",
+  "image": "https://gateway.pinata.cloud/ipfs/QmUk9w2YL8VL8QPBFDDfEVrqNzxgKavGNgzrLucavTgLQ5/shield_1.png",
+  "attributes": [
+    {
+      "trait_type": "Base", 
+      "value": "Metal"
+    },
+    {
+      "display_type": "boost_percentage", 
+      "trait_type": "Defense Increase", 
+      "value": 10
+    } 
+  ]
+}

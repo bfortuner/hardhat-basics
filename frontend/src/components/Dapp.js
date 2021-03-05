@@ -8,6 +8,10 @@ import { ethers } from "ethers";
 import TokenArtifact from "../contracts/ArcadeToken.json";
 import contractAddress from "../contracts/arcade-token-contract-address.json";
 
+// NFT data
+import GameItemArtifact from "../contracts/GameItem.json";
+import gameItemAddress from "../contracts/game-item-contract-address.json";
+
 // All the logic of this dapp is contained in the Dapp component.
 // These other components are just presentational ones: they don't have any
 // logic. They just render HTML.
@@ -23,9 +27,9 @@ import { NoTokensMessage } from "./NoTokensMessage";
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
 // const HARDHAT_NETWORK_ID = '1337';
+const HARDHAT_NETWORK_ID = '3';  // Ropsten
 
-// Ropsten
-const HARDHAT_NETWORK_ID = '3';
+
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -49,6 +53,10 @@ export class Dapp extends React.Component {
     this.initialState = {
       // The info of the token (i.e. It's Name and symbol)
       tokenData: undefined,
+
+      // The info of the token (i.e. It's Name and user's items)
+      gameItemData: undefined,
+
       // The user's address and balance
       selectedAddress: undefined,
       balance: undefined,
@@ -87,7 +95,7 @@ export class Dapp extends React.Component {
 
     // If the token data or the user's balance hasn't loaded yet, we show
     // a loading component.
-    if (!this.state.tokenData || !this.state.balance) {
+    if (!this.state.tokenData || !this.state.balance || !this.state.gameItemData) {
       return <Loading />;
     }
 
@@ -164,6 +172,31 @@ export class Dapp extends React.Component {
             )}
           </div>
         </div>
+
+        <div className="row">
+          <div className="col-12">
+            <h1>
+              Your {this.state.gameItemData.tokenName} NFTs
+            </h1>
+            <p>
+              You have{" "}
+              <b>
+                {this.state.gameItemData.numItems} NFTs
+              </b>
+              .
+            </p>
+            <p>              
+              Id: {this.state.gameItemData.itemTokenId}
+            </p>
+            <img alt="GameItem" src={this.state.gameItemData.itemTokenImageURI} />
+            <p>
+              {this.state.gameItemData.itemTokenMetadata}
+            </p>
+          </div>
+        </div>
+
+        <hr />
+
       </div>
     );
   }
@@ -227,6 +260,7 @@ export class Dapp extends React.Component {
     // sample project, but you can reuse the same initialization pattern.
     this._intializeEthers();
     this._getTokenData();
+    this._getGameItemData();
     this._startPollingData();
   }
 
@@ -241,6 +275,14 @@ export class Dapp extends React.Component {
       TokenArtifact.abi,
       this._provider.getSigner(0)
     );
+
+    // Initialize the NFT GameItem contract
+    this._gameItem = new ethers.Contract(
+      gameItemAddress.GameItem,
+      GameItemArtifact.abi,
+      this._provider.getSigner(0)
+    );
+
   }
 
   // The next to methods are needed to start and stop polling data. While
@@ -269,6 +311,47 @@ export class Dapp extends React.Component {
     const symbol = await this._token.symbol();
 
     this.setState({ tokenData: { name, symbol } });
+  }
+
+  async _getJsonFromURI(jsonURI) {
+    try {
+      let response = await fetch(jsonURI);
+      let responseJson = await response.json();
+      return responseJson;
+     } catch(error) {
+      console.error(error);
+    }
+  }
+
+  async _getGameItemData() {
+    let tokenName;
+    let itemTokenId;
+    let itemTokenURI;
+    let itemTokenImageURI;
+    let itemTokenMetadata;
+    let numItems;
+
+    tokenName = await this._gameItem.name();
+    console.log("NFT Token Name: " + tokenName);
+
+    numItems = (await this._gameItem.balanceOf(this.state.selectedAddress)).toNumber();
+    console.log("Number of items: " + numItems);
+    
+    if (numItems > 0) {
+      itemTokenId = (await this._gameItem.tokenOfOwnerByIndex(this.state.selectedAddress, 0)).toNumber();
+      itemTokenURI = await this._gameItem.tokenURI(itemTokenId);
+      itemTokenMetadata = await this._getJsonFromURI(itemTokenURI);
+      console.log(itemTokenMetadata);
+      itemTokenImageURI = itemTokenMetadata.image;
+      itemTokenMetadata = JSON.stringify(itemTokenMetadata);
+      console.log(itemTokenMetadata);
+    }
+
+    this.setState({ 
+      gameItemData: { 
+        tokenName, numItems, itemTokenId, itemTokenURI, itemTokenImageURI, itemTokenMetadata
+      } 
+    });
   }
 
   async _updateBalance() {
