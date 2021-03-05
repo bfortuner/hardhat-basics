@@ -9,6 +9,8 @@ This project is intended to be used with the
 able to follow it by yourself by reading the README and exploring its
 `contracts`, `tests`, `scripts` and `frontend` directories. Hardhat [documentation](https://hardhat.org/getting-started/).
 
+
+
 ## Quick start
 
 The first things you need to do are cloning this repository and installing its
@@ -81,7 +83,8 @@ Your environment will have everything you need to build a Dapp powered by Hardha
 
 ## Notes
 
-# View
+For local tests and localhost node, Hardhat determins the deployer/owner address. For ropsten, it uses
+your real MetaMask wallet account address you provide in `.env`.
 
 ```bash
 # Compile contracts

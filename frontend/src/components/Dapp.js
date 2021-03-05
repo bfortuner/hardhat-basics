@@ -64,6 +64,9 @@ export class Dapp extends React.Component {
       txBeingSent: undefined,
       transactionError: undefined,
       networkError: undefined,
+
+      arcadeAddress: contractAddress.ArcadeToken,
+      gameItemAddress: gameItemAddress.GameItem,
     };
 
     this.state = this.initialState;
@@ -116,7 +119,7 @@ export class Dapp extends React.Component {
               <b>
                 {(this.state.balance / 1000000000000000000).toString()} {this.state.tokenData.symbol}
               </b>
-              .
+              . The Arcade Contract Address: {this.state.arcadeAddress}
             </p>
           </div>
         </div>
@@ -176,14 +179,14 @@ export class Dapp extends React.Component {
         <div className="row">
           <div className="col-12">
             <h1>
-              Your {this.state.gameItemData.tokenName} NFTs
+              Your {this.state.gameItemData.tokenName} NFTs. 
             </h1>
             <p>
               You have{" "}
               <b>
                 {this.state.gameItemData.numItems} NFTs
               </b>
-              .
+              . GameItem contract address: {this.state.gameItemAddress}
             </p>
             <p>              
               Id: {this.state.gameItemData.itemTokenId}
